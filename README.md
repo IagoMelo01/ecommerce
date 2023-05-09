@@ -14,3 +14,5 @@ We decided to make our work public now as a way to record where and how we start
 
 
 # project link: https://hubblesoftwares.com/pastas_antigas/loja/
+
+#dashboard admin: https://hubblesoftwares.com/pastas_antigas/loja/dashboard/
