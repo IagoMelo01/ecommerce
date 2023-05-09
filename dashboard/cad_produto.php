@@ -1,11 +1,13 @@
-<!-- <div><pre>
-    <?php 
+<?php 
 
         include '../conn.php';
 
+        function tirarAcentos($string){
+            return preg_replace(array("/(á|à|ã|â|ä)/","/(Á|À|Ã|Â|Ä)/","/(é|è|ê|ë)/","/(É|È|Ê|Ë)/","/(í|ì|î|ï)/","/(Í|Ì|Î|Ï)/","/(ó|ò|õ|ô|ö)/","/(Ó|Ò|Õ|Ô|Ö)/","/(ú|ù|û|ü)/","/(Ú|Ù|Û|Ü)/","/(ñ)/","/(Ñ)/"),explode(" ","a A e E i I o O u U n N"),$string);
+        }
 
-        print_r($_POST); 
-        print_r($_FILES);
+
+        
 
          if(isset($_POST['produto'])){
             $referencia = rand(0, 999999);
@@ -23,35 +25,13 @@
             
             $texto = $tituloUTF; 
 
-            $produto = "";      // Recebe o título em binario
+            $produto = tirarAcentos($tituloUTF);      // Recebe o título sem acentos
 
-            $numerosBinario = Array("0000", "0001", "0010", "0011", "0100", "0101","0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111");
-            // ordena as combinações em binário
-            for ($i = 2;$i <=7;$i++){
-                for ($j = 0;$j <=15;$j++){
-                    $binario[] = " ".$numerosBinario[$i]." ".$numerosBinario[$j]; 
-                }
-            }
             
-            // atribui ao array $glifos todos os caracteres imprimiveis da tabela ASCII
-            for ( $i=32; $i <= 126; $i++ ) {
-                    $glifos[] = chr($i); //funçao chr, retorna um caracter, de acordo com seu código na base Decimal 
-            }
-            
-            // converte dados enviados pelo usuário para binário
-            for($i = 0;$i <(strlen($texto));$i++){
-                
-                foreach ($glifos as $key => $value){
-                
-                    if($texto[$i] == $value){
-                        $produto = $produto . $binario[$key]; 
-                    }
-                    
-                }
-            }
+            $time_reference = time();
 
             //substitui os espaços por '_' para criar as pastas
-            $pasta = "../www/produtos/" . str_replace(' ', '_', $produto) . $referencia;
+            $pasta = "../www/produtos/" . str_replace(' ', '_', $produto) . '__' . $referencia . '-' . $time_reference;
 
             
             //cria a pasta do produto
@@ -66,8 +46,8 @@
             $capa = str_replace('../', '',$uploadfile);
 
 
-            $conn->query("INSERT INTO `produtos`( `titulo`, `capa`, `corPrincipal`, `descricao`, `categoria`, `subcategoria`, `vendidos`, `comprimento`, `peso`, `altura`, `largura` , `valor`, `pasta`) VALUES ( '$tituloUTF', '$capa', '$cPrincipal', '$descricao', '$categoria', '$subcategoria', '0', '$comprimento', '$peso', '$altura', '$largura', '$valor', '$pasta')");
-            $ref = $conn->query("SELECT * FROM produtos WHERE 1 ORDER BY id DESC LIMIT 1");
+            $conn->query("INSERT INTO `produtos`( `titulo`, `capa`, `corPrincipal`, `descricao`, `categoria`, `subcategoria`, `vendidos`, `comprimento`, `peso`, `altura`, `largura` , `valor`, `pasta`, `referencia`) VALUES ( '$tituloUTF', '$capa', '$cPrincipal', '$descricao', '$categoria', '$subcategoria', '0', '$comprimento', '$peso', '$altura', '$largura', '$valor', '$pasta', '$time_reference')");
+            $ref = $conn->query("SELECT * FROM produtos WHERE `referencia` = '$time_reference' ORDER BY id DESC LIMIT 1");
             $ref = $ref->fetch_array(MYSQLI_ASSOC);
             $idRef = $ref['id'];
             echo $idRef . '<br>';
@@ -77,98 +57,12 @@
             $controleCor = 1;
             $cor = 'cor' . $controleCor;
 
-            while(isset($_POST[$cor])){
-                echo '<br>'.$cor . '<br>';
-                $cor_UTF = $_POST[$cor];        // Recebe a cor que foi cadastrada
-
-                $texto = $cor_UTF;
-                
-                $cadCor = "";       // Irá receber a cor em binário
-
-                $numerosBinario = Array("0000", "0001", "0010", "0011", "0100", "0101","0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111");
-                // ordena as combinações em binário
-                for ($i = 2;$i <=7;$i++){
-                    for ($j = 0;$j <=15;$j++){
-                        $binario[] = " ".$numerosBinario[$i]." ".$numerosBinario[$j]; 
-                    }
-                }
-                
-                // atribui ao array $glifos todos os caracteres imprimiveis da tabela ASCII
-                for ( $i=32; $i <= 126; $i++ ) {
-                        $glifos[] = chr($i); //funçao chr, retorna um caracter, de acordo com seu código na base Decimal 
-                }
-                
-                // converte dados enviados pelo usuário para binário
-                for($i = 0;$i <(strlen($texto));$i++){
-                    
-                    foreach ($glifos as $key => $value){
-                    
-                        if($texto[$i] == $value){
-                            $cadCor = $cadCor . $binario[$key]; 
-                        }
-                        
-                    }
-                }
-
-                $pastaCor = $pasta . '/' . str_replace(' ', '_', $cadCor);  //cria uma pasta para cada cor cadastrada
-
-                $conn->query("INSERT INTO `cores`( `cor`, `referencia`, `fotos`) VALUES ( '$cor_UTF', '$idRef', '$pastaCor')");     //query para cadastrar a cor no banco de dados
-                $refCor = $conn->query("SELECT * FROM cores WHERE 1 ORDER BY id DESC LIMIT 1");     //seleciona a última cor cadastrada
-                $refCor = $refCor->fetch_array(MYSQLI_ASSOC);       //cria uma array associativo
-                $idCor = $refCor['id'];     //variável para o id da cor
-
-               
-
-                mkdir($pastaCor, 0700);         //cria uma pasta para as fotos da cor
-                $arq = 'arq' . $controleCor;
-
-                $controle = 0;      // variavel de flow control
-
-                foreach( $_FILES[$arq]['name'] as $key){        
-                    /*
-                        Cadastra as imagens da cor na pasta
-                    */
-
-
-                    print_r($key);
-
-                    $dir = $pastaCor . '/';
-
-                    $uploadfile = $dir . $referencia . basename($key);
-
-                    move_uploaded_file($_FILES[$arq]['tmp_name'][$controle], $uploadfile);
-
-                    $controle++;
-
-                }
-
-                
-
-                $controleTam = 1;
-                $tam = 'tam' . $controleTam;
-                while(isset($_POST[$tam])){
-                    $control = 'ref' . $controleTam;
-                    if($_POST[$control] == $controleCor){
-                        echo $tam. '<br>';
-                        $tamanho = $_POST[$tam];
-                        $qtd = 'qtd' . $controleTam;
-                        $quantidade = $_POST[$qtd];
-                        $conn->query("INSERT INTO `tamanhos`(`tamanho`, `referencia`, `quantidade`) VALUES ('$tamanho', '$idCor', '$quantidade')");
-                    }
-                    
-                    $controleTam++;
-                    $tam = 'tam' . $controleTam;
-                }
-
-
-                $controleCor++;
-                $cor = 'cor' . $controleCor;
-            }
+            echo '<script> window.location.href="./mod_produto?p=2.2&pd=' . $idRef . '" </script>';
 
         }
     ?>
 
-</pre></div> -->
+
 
 
 <?php 
@@ -195,7 +89,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-8">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">Cadastrar Produtos</h5>
+                            <h5 class="m-b-10">Cadastrar Produto</h5>
                             <p class="m-b-0">_</p>
                         </div>
                     </div>
@@ -213,7 +107,7 @@
                         <div class="card-block">
                             <form class="form-material" action="" enctype="multipart/form-data" method="post">
                                 <div class="form-group form-primary">
-                                    <input type="text" name="produto" class="form-control">
+                                    <input type="text" name="produto" maxlength="200" class="form-control">
                                     <span class="form-bar"></span>
                                     <label class="float-label">Nome do produto</label>
                                 </div>
@@ -223,7 +117,7 @@
                                     <label class="float-label">Valor</label>
                                 </div>
                                 <div>
-                                    <h6>Dimensões:</h6>
+                                    <h6>Dimensões:  <i> (Referentes ao pacote de envio)</i></h6>
                                 </div>
                                 <div class="row">
                                     <div style="margin: 0 2%;" class="form-group col form-primary">
@@ -253,10 +147,11 @@
                                 
                                 <div class="form-group form-primary">
                                     <h6>Foto de capa:</h6>
-                                    <input type="file" name="capa" class="form-control arq">
+                                    <input onchange="preview()" id="imgCapa" type="file" name="capa" accept=".jpg,.png,.jpeg" class="form-control arq">
+                                    <img id="imgPreview" style="height:100px;" src="#" alt="">
                                 </div>
                                 <div class="form-group form-primary">
-                                    <input maxlength="64000" type="text" name="descricao" class="form-control">
+                                <textarea style="height: 6rem;" maxlength="64000" rows="6" name="descricao" id="descricao" class="form-control" ></textarea>
                                     <span class="form-bar"></span>
                                     <label class="float-label">Descrição do produto:</label>
                                 </div>
@@ -302,14 +197,16 @@
 
                                 <br>
                                 <hr color="navy">
-                                <br>
+                                <!-- <br>
                                 <h5>Cores e tamanhos:</h5>
                                 <div class="subcontainer" id="addCor">
 
 
-                                <input type="hidden" name="corCont" id="corCount" value="1">
-                                <input type="hidden" name="tamCont" id="tamCount" value="1">
+                                    <input type="hidden" name="corCont" id="corCount" value="1">
+                                    <input type="hidden" name="tamCont" id="tamCount" value="1">
 
+                                    
+                                    
                                     <div class="cor1" id="cor1">
                                         <div class="form-group form-primary">
                                             <input type="text" name="cor1" class="form-control">
@@ -339,21 +236,21 @@
                                         <div id="addTam1">
 
                                         </div>
-                                        
-                                        
-                                       
-                                        
                                     
-                                        
+                                    
+                                    
+                                    
+                                
+                                    
                                     </div>
                                     
                                     
                                     
-                                </div>
-                                <div class="col-4">
+                                </div> -->
+                                <!-- <div class="col-4">
                                     <button type="button" class="btn btn-success" onclick="adcCor()">Adicionar Cor</button>
                                 </div>
-                                <br><br>
+                                <br><br> -->
                                 <div class="container">
                                     <input style="font-weight: bold" class="btn-lg container btn-info" type="submit" value="SALVAR">
                                 </div>
@@ -379,6 +276,12 @@
 
 <script>
 
+function preview() {
+  const [file] = imgCapa.files
+  if (file) {
+    imgPreview.src = URL.createObjectURL(file)
+  }
+}
 
 </script>
 

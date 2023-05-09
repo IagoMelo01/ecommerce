@@ -11,131 +11,7 @@
 
         
 
-        print_r($_POST); 
-        print_r($_FILES);
-
-         if(isset($_POST['produto'])){
-            $referencia = rand(0, 99999);
-            $tituloUTF = $produto_modificar['titulo'];
-            $valor = $_POST['valor'];
-            $altura = $_POST['altura'];
-            $largura = $_POST['largura'];
-            $comprimento = $_POST['comprimento'];
-            $peso = $_POST['peso'];
-            $corCont = $_POST['corCont'];
-            $cPrincipal = $_POST['cor1'];
-            $descricao = $_POST['descricao'];
-
-            $texto = $tituloUTF; 
-
-            $produto = "";      // Recebe o título em binario
-
-            $numerosBinario = Array("0000", "0001", "0010", "0011", "0100", "0101","0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111");
-            // ordena as combinações em binário
-            for ($i = 2;$i <=7;$i++){
-                for ($j = 0;$j <=15;$j++){
-                    $binario[] = " ".$numerosBinario[$i]." ".$numerosBinario[$j]; 
-                }
-            }
-            
-            // atribui ao array $glifos todos os caracteres imprimiveis da tabela ASCII
-            for ( $i=32; $i <= 126; $i++ ) {
-                    $glifos[] = chr($i); //funçao chr, retorna um caracter, de acordo com seu código na base Decimal 
-            }
-            
-            // converte dados enviados pelo usuário para binário
-            for($i = 0;$i <(strlen($texto));$i++){
-                
-                foreach ($glifos as $key => $value){
-                
-                    if($texto[$i] == $value){
-                        $produto = $produto . $binario[$key]; 
-                    }
-                    
-                }
-            }
-
-
-            $pasta = "../www/produtos/" . str_replace(' ', '_', $produto) . $referencia;
-
-            mkdir($pasta, 0700);
-            
-            $dirCapa = "../www/capas/";
-            $uploadfile = $dirCapa . basename($referencia . str_replace(' ', '_', $_FILES['capa']['name']));
-
-            move_uploaded_file($_FILES['capa']['tmp_name'], $uploadfile);
-
-            $capa = str_replace('../', '',$uploadfile);
-
-
-            $conn->query("INSERT INTO `produtos`( `titulo`, `capa`, `corPrincipal`, `descricao`, `categoria`, `subcategoria`, `vendidos`, `comprimento`, `peso`, `altura`, `largura` , `valor`) VALUES ( '$produto', '$capa', '$cPrincipal', '$descricao', '1', '1', '0', '$comprimento', '$peso', '$altura', '$largura', '$valor')");
-            $ref = $conn->query("SELECT * FROM produtos WHERE 1 ORDER BY id DESC LIMIT 1");
-            $ref = $ref->fetch_array(MYSQLI_ASSOC);
-            $idRef = $ref['id'];
-            echo $idRef . '<br>';
-
-            
-
-            $controleCor = 1;
-            $cor = 'cor' . $controleCor;
-
-            while(isset($_POST[$cor])){
-                echo '<br>'.$cor . '<br>';
-                $cadCor = $_POST[$cor];
-
-                $pastaCor = $pasta . '/' . str_replace(' ', '_', $cadCor);
-
-                $conn->query("INSERT INTO `cores`( `cor`, `referencia`, `fotos`) VALUES ( '$cadCor', '$idRef', '$pastaCor')");
-                $refCor = $conn->query("SELECT * FROM cores WHERE 1 ORDER BY id DESC LIMIT 1");
-                $refCor = $refCor->fetch_array(MYSQLI_ASSOC);
-                $idCor = $refCor['id'];
-
-               
-
-                mkdir($pastaCor, 0700);
-                $arq = 'arq' . $controleCor;
-
-                $controle = 0;
-
-                foreach( $_FILES[$arq]['name'] as $key){
-
-
-                    print_r($key);
-
-                    $dir = $pastaCor . '/';
-
-                    $uploadfile = $dir . $referencia . basename($key);
-
-                    move_uploaded_file($_FILES[$arq]['tmp_name'][$controle], $uploadfile);
-
-                    $controle++;
-
-                }
-
-                
-
-                $controleTam = 1;
-                $tam = 'tam' . $controleTam;
-                while(isset($_POST[$tam])){
-                    $control = 'ref' . $controleTam;
-                    if($_POST[$control] == $controleCor){
-                        echo $tam. '<br>';
-                        $tamanho = $_POST[$tam];
-                        $qtd = 'qtd' . $controleTam;
-                        $quantidade = $_POST[$qtd];
-                        $conn->query("INSERT INTO `tamanhos`(`tamanho`, `referencia`, `quantidade`) VALUES ('$tamanho', '$idCor', '$quantidade')");
-                    }
-                    
-                    $controleTam++;
-                    $tam = 'tam' . $controleTam;
-                }
-
-
-                $controleCor++;
-                $cor = 'cor' . $controleCor;
-            }
-
-        }
+        
     ?>
 
 </pre></div> -->
@@ -257,7 +133,7 @@
             <label for="capa_nova">Foto da Capa:</label>
           </div>
           
-          <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" onclick="salvarCapa()" type="button">Salvar</button>
+          <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" onclick="salvarCapa('../<?php echo $produto_modificar['capa']; ?>')" type="button">Salvar</button>
           
         </form>
       </div>
@@ -283,6 +159,64 @@
             <label for="descricao_nova">Descrição:</label>
           </div>
           <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" onclick="salvarDescricao()" type="button">Salvar</button>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal editar categoria e subcategoria -->
+
+<div class="modal modal-signin fade" tabindex="-1" role="dialog" id="modalCat">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content rounded-5 shadow">
+      <div class="modal-header p-5 pb-4 border-bottom-0">
+        <!-- <h5 class="modal-title">Modal title</h5> -->
+        <h2 class="fw-bold mb-0">Editar Categoria e subcategoria</h2>
+        <button type="button" class="btn-close bi-x-square" data-bs-dismiss="#modalCat" data-toggle="modal" data-target="#modalCat" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body p-5 pt-0">
+        <form class="">
+          <div class="form-floating mb-3">
+            <select readonly class="form-control" id="categoriaNova" name="categoria" >
+                <?php
+                    $consulta_categorias = $conn->query("SELECT * FROM categorias WHERE 1");
+                    $lista_categorias = [];
+                    while($lista_categorias[] = $consulta_categorias->fetch_assoc());
+
+                    foreach($lista_categorias as $key_categoria){
+                        if(!empty($key_categoria)){
+                            $referencia_categoria = $key_categoria['id'];
+                            
+                ?>
+
+                      <option value="<?php echo $key_categoria['id']; ?>"><?php echo $key_categoria['categoria']; ?></option>
+
+                <?php }} ?>
+            </select>
+          </div>
+
+          <div class="form-floating mb-3">
+            <select readonly class="form-control" name="subcategoria" id="subCategoriaNova">
+                <?php
+                    $lista_subcategorias = [];
+                    $consulta_subcategoria = $conn->query("SELECT * FROM subcategorias WHERE 1");
+                    while($lista_subcategorias[] = $consulta_subcategoria->fetch_assoc());
+
+                    foreach($lista_subcategorias as $subkey){
+                        if(!empty($subkey)){
+                ?>
+                        <option value="<?php echo $subkey['id']; ?>"><?php echo $subkey['subcategoria']; ?></option>
+                <?php }} ?>
+            </select>
+          </div>
+
+
+          <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" onclick="salvarCategoria()" type="button">Salvar</button>
           
         </form>
       </div>
@@ -404,28 +338,28 @@
 
 <!-- Modal editar Cor -->
 
-<div class="modal modal-signin fade" tabindex="-1" role="dialog" id="modalCor">
+<div class="modal modal-signin fade" tabindex="-1" role="dialog" id="modaledCor">
   <div class="modal-dialog" role="document">
     <div class="modal-content rounded-5 shadow">
       <div class="modal-header p-5 pb-4 border-bottom-0">
         <!-- <h5 class="modal-title">Modal title</h5> -->
-        <h2 class="fw-bold mb-0">Adicionar Cor</h2>
-        <button type="button" class="btn-close bi-x-square" data-bs-dismiss="#modalCor" data-toggle="modal" data-target="#modalCor" aria-label="Close"></button>
+        <h2 class="fw-bold mb-0">Editar Cor</h2>
+        <button type="button" class="btn-close bi-x-square" data-bs-dismiss="#modaledCor" data-toggle="modal" data-target="#modaledCor" aria-label="Close"></button>
       </div>
 
       <div class="modal-body p-5 pt-0">
-        <form class="" id="formNovaCor" action="script" enctype="multipart/form-data" method="post">
+        <form class="" id="formEditarCor" action="script" enctype="multipart/form-data" method="post">
 
           <div class="form-floating mb-3">
             <input type="file" name="arquivos[]" class="form-control rounded-4" id="arquivos_cor" maxlength="6" multiple>
             <label for="arquivos_cor">Fotos:</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control rounded-4" id="nova_cor" name="nova_cor" placeholder="">
-            <label for="nova_cor">Cor:</label>
+            <input type="text" class="form-control rounded-4" id="nova_cor" name="nome_cor" placeholder="">
+            <label for="nova_cor">Nome:</label>
           </div>
-          <input type="hidden" name="id_produto" id="idProduto" value="<?php echo $id_modificar; ?>">
-          <input type="hidden" name="funcao" id="funcao" value="adicionar_cor_existente">
+          <input type="hidden" name="id" id="idEdCor" value="">
+          <input type="hidden" name="funcao" id="funcao" value="editar_cor">
           <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" onclick="salvarCor()" type="button">Adicionar</button>
           
         </form>
@@ -436,6 +370,39 @@
 
 
 <!-- ____________________________________________________________________________________________________________________________________________________________________________________ -->
+
+
+
+<!-- Modal confirmação -->
+
+<div class="modal modal-signin fade" tabindex="-1" role="dialog" id="modalConfirmar">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content rounded-5 shadow">
+      <div class="modal-header p-5 pb-4 border-bottom-0">
+        <!-- <h5 class="modal-title">Modal title</h5> -->
+        <h2 class="fw-bold mb-0">Tem certeza?</h2>
+        <button type="button" class="btn-close bi-x-square" data-bs-dismiss="#modalConfirmar" data-toggle="modal" data-target="#modalConfirmar" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body p-5 pt-0">
+        <form class="" id="formEditarCor" action="script" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="dadosAjax" id="dadosAjax" value="">
+          <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" onclick="sendAjax()" type="button">Confirmar</button>
+          <button class="w-100 mb-2 btn btn-lg rounded-4 btn" data-bs-dismiss="#modalConfirmar" data-toggle="modal" data-target="#modalConfirmar" aria-label="Close" type="button">Cancelar</button>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- _____________________________________________________________________________________________________________________________________________________________________________________ -->
+
 
 
 
@@ -534,7 +501,7 @@
                                 </div>
                                 <div class="form">
                                     <p class="font-weight-bold">Descrição do produto:</p>
-                                    <textarea style="height: 6rem;" readonly maxlength="64000" rows="6" name="descricao" class="form-control" ><?php echo $produto_modificar['descricao']; ?></textarea>
+                                    <textarea style="height: 6rem;" readonly maxlength="64000" rows="6" name="descricao" id="descricao" class="form-control" ><?php echo $produto_modificar['descricao']; ?></textarea>
                                     <span class="form-bar"></span>
                                 </div>
                                 <button class="btn btn-primary" type="button" onclick="editarDescricao()" data-toggle="modal" data-target="#modalDesc">
@@ -544,6 +511,57 @@
                                         Editar Descrição 
                                     </label>
                                 </button> 
+
+                                <h6>Categoria e subcategoria:</h6>
+                                <div class="row">
+                                    <div style="margin: 0 2%;" class="form-group col form-primary">
+
+                                        <select readonly class="form-control" name="categoria" id="categoria">
+                                            <?php
+                                                $categoria_id = $produto_modificar['categoria'];
+                                                $consulta_categorias = $conn->query("SELECT * FROM categorias WHERE `id` = '$categoria_id'");
+                                                $lista_categorias = [];
+                                                while($lista_categorias[] = $consulta_categorias->fetch_assoc());
+
+                                                foreach($lista_categorias as $key_categoria){
+                                                    if(!empty($key_categoria)){
+                                                        $referencia_categoria = $key_categoria['id'];
+                                                        
+                                            ?>
+                                                    
+                                                     
+                                                    <option value="<?php echo $key_categoria['id']; ?>"><?php echo $key_categoria['categoria']; ?></option>
+                                            <?php }} ?>
+                                        </select>
+                                    </div>
+                                    <div style="margin: 0 2%;" class="form-group col form-primary">
+                                    
+                                    
+                                        <select readonly class="form-control" name="subcategoria" id="subcategoria_select">
+                                            <?php
+                                                $subcategoria_id = $produto_modificar['subcategoria'];
+                                                $lista_subcategorias = [];
+                                                $consulta_subcategoria = $conn->query("SELECT * FROM `subcategorias` WHERE `id` = '$subcategoria_id'");
+                                                while($lista_subcategorias[] = $consulta_subcategoria->fetch_assoc());
+
+                                                foreach($lista_subcategorias as $subkey){
+                                                    if(!empty($subkey)){
+                                            ?>
+                                                    <option value="<?php echo $subkey['id']; ?>"><?php echo $subkey['subcategoria']; ?></option>
+                                            <?php }} ?>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-primary" type="button" onclick="editarCategoria()" data-toggle="modal" data-target="#modalCat">
+                                        <span class="bi-pencil-square"></span>  
+                                        <br>
+                                        <label style="padding: 0; margin: 0;" for="#btnExcluir">
+                                            Editar categoria 
+                                        </label>
+                                    </button> 
+                                </div>
+
+
+
                                 <br>
                                 <hr color="navy">
                                 <br>
@@ -590,7 +608,7 @@
                                                         <h6>Fotos do produto:</h6>
                                                         <div class="row">
                                                             <?php foreach($arquivos as $foto){ ?>
-                                                                <img style="height:100px;" src="<?php echo $key['fotos'] . '/' . $foto; ?>" alt="">
+                                                                <img style="height:100px; margin-left: 6px;" src="<?php echo $key['fotos'] . '/' . $foto; ?>" alt="">
                                                             <?php } ?>
                                                         </div>
                                                         <!-- <input type="file" name="arq1[]" class="arq form-control " maxlength="6" multiple> -->
@@ -623,7 +641,7 @@
                                                                                 <label class="float-label">quantidade</label>
                                                                             </div>
                                                                             <button class="btn btn-primary" style="border-radius: 5px; margin: 1%; padding:0" type="button" onclick="editarTamanho(<?php echo $key_tamanho['id']; ?>)" data-toggle="modal" data-target="#modalEdTam"><span class="bi-pencil-square"></span><br><label style="padding: 0; margin: 0;" for="#btnExcluir">Editar</label></button>
-                                                                            <button id="btnExcluir" class="btn btn-danger" style="border-radius: 5px; margin: 1%; padding:0" type="button" onclick="excluirTamanho(<?php echo $key_tamanho['id']; ?>)"><span style="text-color: red" class="bi-x-square"></span><br><label style="padding: 0; margin: 0;" for="#btnExcluir">Excluir</label></button>
+                                                                            <button id="btnExcluir" class="btn btn-danger" style="border-radius: 5px; margin: 1%; padding:0" data-toggle="modal" data-target="#modalConfirmar" type="button" onclick="excluirTamanho(<?php echo $key_tamanho['id']; ?>)"><span style="text-color: red" class="bi-x-square"></span><br><label style="padding: 0; margin: 0;" for="#btnExcluir">Excluir</label></button>
                                                                             <input type="hidden" name="ref1" value="1">
                                                                             
                                                                                 
@@ -637,10 +655,10 @@
                                                                                     <button type="button" class="btn btn-primary form-static-label" id="tcor1btn10" onclick="adcTamanhoExistente('<?php echo $key['id']; ?>')" data-toggle="modal" data-target="#modalTam">Adicionar Tamanho</button>
                                                                                 </div>
                                                                                 <div class="col">
-                                                                                    <button type="button" class="btn btn-danger form-static-label" id="tcor1btn10" onclick="excluirCor(<?php echo $key['id']; ?>)">Excluir Cor</button>
+                                                                                    <button type="button" class="btn btn-danger form-static-label" id="tcor1btn10" data-toggle="modal" data-target="#modalConfirmar" onclick="excluirCor(<?php echo $key['id']; ?>)">Excluir Cor</button>
                                                                                 </div>
                                                                                 <div class="col">
-                                                                                    <button type="button" class="btn btn-success form-static-label" id="tcor1btn10" onclick="editarCor('<?php echo $key['id']; ?>')" data-toggle="modal" data-target="#modalTam">Editar Cor</button>
+                                                                                    <button type="button" class="btn btn-success form-static-label" id="tcor1btn10" onclick="editarCor('<?php echo $key['id']; ?>')" data-toggle="modal" data-target="#modaledCor">Editar Cor</button>
                                                                                 </div>
                                                                             </div>
                                                                           <?php  } 
@@ -678,7 +696,7 @@
                                     <div class="row">
                                         <input style="font-weight: bold" class="btn-lg col-md-7 container btn-info" type="submit" value="SALVAR">
                                         <div class="col-md-1"></div>
-                                        <button style="font-weight: bold" onclick="excluir_produto(<?php echo $_GET['pd'] ?>)" class="btn-lg col-md-4 container btn-danger" type="button" value="">EXCLUIR PRODUTO</button>
+                                        <button style="font-weight: bold" onclick="excluirProduto(<?php echo $_GET['pd'] ?>)" class="btn-lg col-md-4 container btn-danger" type="button" data-toggle="modal" data-target="#modalConfirmar">EXCLUIR PRODUTO</button>
                                     </div>
                                     
                                 </div>

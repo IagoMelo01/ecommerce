@@ -28,56 +28,47 @@ if(isset($_POST) && $_POST['funcao'] == 'adicionar_tamanho_existente'){
 if(isset($_POST) && $_POST['funcao'] === 'adicionar_cor_existente'){
     $referencia = rand(0, 999999);
     $nova_cor = $_POST['nova_cor'];  //Recebe o titulo cadastrado
-    $refPasta = $_POST['id_produto'];
+    $id_produto = $_POST['id_produto'];
 
-    $refCor = $conn->query("SELECT * FROM `produtos` WHERE `id` = '$refPasta' ORDER BY id DESC LIMIT 1");     //seleciona a última cor cadastrada
+    $refCor = $conn->query("SELECT * FROM `produtos` WHERE `id` = '$id_produto' ORDER BY id DESC LIMIT 1");     //  busca o produto referente ao id
     $refCor = $refCor->fetch_array(MYSQLI_ASSOC);       //cria uma array associativo
-    $pasta = $refCor['pasta'];     //variável para o id da cor
+    $pasta = $refCor['pasta'];     // Pasta onde a nova cor será criada
 
-echo $pasta;
-
-
-
-        $cor_UTF = $nova_cor;        // Recebe a cor que foi cadastrada
-
-        $texto = $cor_UTF;
-        
-        $cadCor = time();       // Irá receber a cor em binário
+    echo $pasta;
 
         
+        $diretorio = $pasta . '/' . time();  // Irá criar o diretório da cor a ser salva, nomeada pelo timestamp
 
-        $pastaCor = $pasta . '/' . str_replace(' ', '_', $cadCor);  //cria uma pasta para cada cor cadastrada
-
-        $conn->query("INSERT INTO `cores`( `cor`, `referencia`, `fotos`) VALUES ( '$cor_UTF', '$refPasta', '$pastaCor')");     //query para cadastrar a cor no banco de dados
-        
+        $conn->query("INSERT INTO `cores`( `cor`, `referencia`, `fotos`) VALUES ( '$nova_cor', '$id_produto', '$diretorio')");     //query para cadastrar a cor no banco de dados
         
 
-        mkdir($pastaCor, 0700);         //cria uma pasta para as fotos da cor
+        mkdir($diretorio, 0700);         //cria uma pasta para as fotos da cor
 
-        $arq = "arquivos";
 
-        $controle = 0;      // variavel de flow control
+        $diretorio_fotos = $diretorio . '/';
 
-        foreach( $_FILES[$arq]['name'] as $key){        
+        $controle_upload = 0;
+
+        foreach( $_FILES['arquivos']['name'] as $key){        
             /*
-                Cadastra as imagens da cor na pasta
+                Faz o upload das imagens no diretório criado
             */
 
 
             print_r($key);
 
-            $dir = $pastaCor . '/';
+            $uploadfile = $diretorio_fotos . $referencia . '_' . $controle_upload . '__' . basename($key);
 
-            $uploadfile = $dir . $referencia . basename($key);
+            echo $uploadfile;
 
-            move_uploaded_file($_FILES[$arq]['tmp_name'][$controle], $uploadfile);
+            move_uploaded_file($_FILES['arquivos']['tmp_name'][$controle_upload], $uploadfile);
 
-            $controle++;
+            $controle_upload++;
 
         }
 
         
-    echo '<script> window.location.href="./mod_produto?p=2.2&pd=' . $refPasta . '" </script>';
+    echo '<script> window.location.href="./mod_produto?p=2.2&pd=' . $id_produto . '" </script>';
 
         
 }
@@ -105,6 +96,80 @@ if(isset($_POST) && $_POST['funcao'] == 'alterar_tamanho'){
 }
 
 
+if(isset($_POST) && $_POST['funcao'] == 'salvar_info'){
+    $id = $_POST['id'];
+    $nome = $_POST['nome'];
+    $valor = $_POST['valor'];
+
+    $query = $conn->query("UPDATE `produtos` SET `titulo` = '$nome', `valor` = '$valor' WHERE `id` = '$id'");
+}
+
+
+if(isset($_POST) && $_POST['funcao'] == 'salvar_dimensoes'){
+    $id = $_POST['id'];
+    $altura = $_POST['altura'];
+    $largura = $_POST['largura'];
+    $comprimento = $_POST['comprimento'];
+    $peso = $_POST['peso'];
+
+    $query = $conn->query("UPDATE `produtos` SET `altura` = '$altura', `largura` = '$largura', `comprimento` = '$comprimento', `peso` = '$peso' WHERE `id` = '$id'");
+}
+
+
+if(isset($_POST) && $_POST['funcao'] == 'salvar_descricao'){
+    $id = $_POST['id'];
+    $descricao = $_POST['descricao'];
+
+    $query = $conn->query("UPDATE `produtos` SET `descricao` = '$descricao' WHERE `id` = '$id' ");
+}
+
+if(isset($_POST) && $_POST['funcao'] == 'salvar_capa'){
+    $id = $_POST['id'];
+    $apagar = $_POST['capa_apagar'];
+
+
+    unlink($apagar);
+
+    $referencia = rand(0, 99999);
+    $dirCapa = "../www/capas/";     // diretorio onde sera salva a foto de capa
+    $uploadfile = $dirCapa . basename($referencia . str_replace(' ', '_', $_FILES['capa']['name'])); // faz o upload do arquivo
+
+    // extrai o aquivo da supervariavel FILES do formulario
+    move_uploaded_file($_FILES['capa']['tmp_name'], $uploadfile);
+
+    $capa = str_replace('../', '',$uploadfile);
+
+    $query = $conn->query("UPDATE `produtos` SET `capa` = '$capa'");
+    echo "capa salva";
+}
+
+if(isset($_POST) && $_POST['funcao'] == 'editar_cor'){
+    $id = $_POST['id'];
+    $arquivos = $_POST['arquivos'];
+    $cor = $_POST['nome_cor'];
+
+    $consult = [];
+    $query = $conn->query("SELECT * FROM `cores` WHERE `id` = '$id'");
+    while($consult[] = $query->fetch_assoc());
+
+    $dir = '';
+}
+
+if(isset($_POST) && $_POST['funcao'] == 'editar_categoria'){
+    $id_produto = $_POST['id'];
+    $categoria = $_POST['categoriaNova'];
+    $subcategoria = $_POST['subCategoriaNova'];
+
+    $query = $conn->query("UPDATE `produtos` SET `categoria`='$categoria', `subcategoria`='$subcategoria' WHERE `id`='$id_produto'");
+}
+
+
+if(isset($_POST) && $_POST['funcao'] == 'excluir_produto'){
+    $id_produto = $_POST['id'];
+
+    $query = $conn->query("UPDATE `produtos` SET `situacao`= 1 WHERE `id`='$id_produto'");
+
+}
 
 
 
