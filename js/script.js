@@ -256,41 +256,36 @@ function mudarCategoriasSelecTodas(){
   $("#todas_cat").prop("checked", false);
 }
 
+
+// _____________________________ FUNÇÕES DE TAMANHO _________________________
+
 function excluirTamanho(id){
+  var dados = "funcao=excluir_tamanho&id=" + id;
+  $("#dadosAjax").val(dados);
+}
+
+function editarTamanho(id){
+  $("#idEdTam").val(id);
   $.ajax({
     url: "../dashboard/script",
     type: "POST",
-    data: "funcao=excluir_tamanho&id=" + id,
+    data: "funcao=get_quantidade&id=" + id ,
     dataType: "html"
   }).done(function(resposta){
     // alert(resposta);
+    var str = resposta;
+    var info = str.split("_");
+    $("#quantidadeAtual").val(info[0]);
+    $("#EdTamNome").val(info[1]);
     console.log(resposta);
-    location.reload();
+    //location.reload();
   }).fail(function(jqXHR, textStatus ) {
     console.log("Request failed: " + textStatus);
 
   }).always(function() {
       console.log("completou");
   });
-}
-
-function excluirCor(id){
-  $.ajax({
-    url: "../dashboard/script",
-    type: "POST",
-    data: "funcao=excluir_cor&id=" + id,
-    dataType: "html"
-  }).done(function(resposta){
-    // alert(resposta);
-    console.log(resposta);
-    location.reload();
-  }).fail(function(jqXHR, textStatus ) {
-    console.log("Request failed: " + textStatus);
-
-  }).always(function() {
-      console.log("completou");
-  });
-}
+} 
 
 function adcTamanhoExistente(id){
   alert(id + '  ok')
@@ -328,32 +323,6 @@ function salvarTamanho(){
   
 }
 
-function salvarCor(){
-  $("#formNovaCor").submit()
-}
-
-function editarTamanho(id){
-  $("#idEdTam").val(id);
-  $.ajax({
-    url: "../dashboard/script",
-    type: "POST",
-    data: "funcao=get_quantidade&id=" + id ,
-    dataType: "html"
-  }).done(function(resposta){
-    // alert(resposta);
-    var str = resposta;
-    var info = str.split("_");
-    $("#quantidadeAtual").val(info[0]);
-    $("#EdTamNome").val(info[1]);
-    console.log(resposta);
-    //location.reload();
-  }).fail(function(jqXHR, textStatus ) {
-    console.log("Request failed: " + textStatus);
-
-  }).always(function() {
-      console.log("completou");
-  });
-} 
 
 
 function AlterarTamanho(){
@@ -380,13 +349,35 @@ function AlterarTamanho(){
 } 
 
 
-function editarInfo(titulo, valor){
-  alert("info");
+
+// ________________________________________ FUNÇÕES DE COR _____________________________________________
+
+function excluirCor(id){
+  var dados = "funcao=excluir_cor&id=" + id;
+  $("#dadosAjax").val(dados);
+}
+
+function salvarCor(){
+  $("#formNovaCor").submit()
+}
+
+
+function editarCor(id){
+  $("#idEdCor").val(id);
+}
+
+
+
+
+// _______________________________________________ FUNÇÕES DAS INFOS DO PRODUTO ______________________________________
+
+function editarInfo(titulo, valor){           // Funcao para abrir o modal de edição de titulo e preço
+  alert(titulo + valor);
   $("#nome_novo").val(titulo);
   $("#valor_novo").val(valor);
 }
 
-function salvarInfo(){
+function salvarInfo(){                      // função para salvar o titulo e o valor
   var nome = $("#nome_novo").val();
   var valor = $("#valor_novo").val();
   var id  = $("#id_produto").val();
@@ -394,7 +385,7 @@ function salvarInfo(){
     $.ajax({
       url: "../dashboard/script",
       type: "POST",
-      data: "funcao=salvar_info&id=" + id + "&nome=" + nome + "&operacao=" + operacao +"&valor=" + valor ,
+      data: "funcao=salvar_info&id=" + id + "&nome=" + nome + "&valor=" + valor ,
       dataType: "html"
     }).done(function(resposta){
        alert(resposta);
@@ -409,3 +400,133 @@ function salvarInfo(){
     });
   }
 }
+
+
+function editarDim(altura, largura, comprimento, peso){         // função para abrir o modal de edição das dimensões
+  $("#peso_novo").val(peso);
+  $("#comprimento_novo").val(comprimento);
+  $("#largura_nova").val(largura);
+  $("#altura_nova").val(altura);
+}
+
+function salvarDimensoes(){                               // função para salvar as edições das dimensões
+  var peso = $("#peso_novo").val();
+  var comprimento = $("#comprimento_novo").val();
+  var largura = $("#largura_nova").val();
+  var altura = $("#altura_nova").val();
+  var id = $("#id_produto").val();
+  $.ajax({
+    url: "../dashboard/script",
+    type: "POST",
+    data: "funcao=salvar_dimensoes&id=" + id + "&peso=" + peso + "&comprimento=" + comprimento +"&largura=" + largura + "&altura=" + altura ,
+    dataType: "html"
+  }).done(function(resposta){
+     alert(resposta);
+    
+    console.log(resposta);
+    location.reload();
+  }).fail(function(jqXHR, textStatus ) {
+    console.log("Request failed: " + textStatus);
+
+  }).always(function() {
+      console.log("completou");
+  });
+}
+
+
+function editarDescricao(){                       // função para abrir o modal de edição da descrição   
+  var descricao = $("#descricao").val();
+  $("#descricao_nova").val(descricao);
+}
+
+function salvarDescricao(){                     // função para salvar a edição na descrição
+  var descricao = $("#descricao_nova").val();
+  var id = $("#id_produto").val();
+  $.ajax({
+    url: "../dashboard/script",
+    type: "POST",
+    data: "funcao=salvar_descricao&id=" + id + "&descricao=" + descricao ,
+    dataType: "html"
+  }).done(function(resposta){
+     alert(resposta);
+    
+    console.log(resposta);
+    location.reload();
+  }).fail(function(jqXHR, textStatus ) {
+    console.log("Request failed: " + textStatus);
+
+  }).always(function() {
+      console.log("completou");
+  });
+}
+
+
+function salvarCapa(capa){
+  var file = $("#capa_nova").prop('files')[0];
+  var form = new FormData();
+  var id = $("#id_produto").val();
+  form.append('capa', file);
+  form.append('id', id);
+  form.append('funcao', 'salvar_capa');
+  form.append('capa_apagar', capa);
+  $.ajax({
+    url: "script",
+    type: "POST",
+    data: form,
+    contentType: false,
+    cache: false,
+    processData:false,
+    success: function(data){
+         $("#result").html(data);
+         alert("data");
+         location.reload();
+
+    }
+  }).done(function(resposta){
+    alert(resposta);
+  });
+}
+
+
+function salvarCategoria(){
+  var categoriaNova = $("#categoriaNova").val();
+  var subCategoriaNova = $("#subCategoriaNova").val();
+  var id_produto = $("#id_produto").val();
+  var dadosCategoria = "funcao=editar_categoria&id=" + id_produto + "&categoriaNova=" + categoriaNova + "&subCategoriaNova=" + subCategoriaNova;
+
+  $("#dadosAjax").val(dadosCategoria);
+  sendAjax();
+}
+
+
+function excluirProduto(id){
+  var excluir_produto = "funcao=excluir_produto&id=" + id;
+
+  $("#dadosAjax").val(excluir_produto);
+
+}
+
+
+// ________________________________________ Ajax para exclusões ________________________________________________
+
+function sendAjax(){
+  var dataAjax = $("#dadosAjax").val();
+  $.ajax({
+    url: "../dashboard/script",
+    type: "POST",
+    data: dataAjax,
+    dataType: "html"
+  }).done(function(resposta){
+    // alert(resposta);
+    console.log(resposta);
+    location.reload();
+  }).fail(function(jqXHR, textStatus ) {
+    console.log("Request failed: " + textStatus);
+
+  }).always(function() {
+      console.log("completou");
+  });
+}
+
+
+
