@@ -9,7 +9,7 @@
         $produto_modificar = $conn->query("SELECT * FROM produtos WHERE id = '$id_modificar'");
         $produto_modificar = $produto_modificar->fetch_assoc();
 
-        
+        print_r($produto_modificar);
 
         
     ?>
@@ -184,7 +184,7 @@
           <div class="form-floating mb-3">
             <select readonly class="form-control" id="categoriaNova" name="categoria" >
                 <?php
-                    $consulta_categorias = $conn->query("SELECT * FROM categorias WHERE 1");
+                    $consulta_categorias = $conn->query("SELECT * FROM categorias");
                     $lista_categorias = [];
                     while($lista_categorias[] = $consulta_categorias->fetch_assoc());
 
@@ -576,7 +576,12 @@
                                         
                                         $listar_cores_query = $conn->query("SELECT * FROM `cores` WHERE `referencia` = '$id_modificar' AND `situacao` = '0' ");
                                         $lista_cores = [];
-                                        while($lista_cores[] = $listar_cores_query->fetch_assoc())
+                                        // echo "<script> console.log(" . print_r($listar_cores_query, True) . ") </script>";
+                                        print_r($listar_cores_query);
+                                        if(!empty($listar_cores_query)){
+                                          while($lista_cores[] = $listar_cores_query->fetch_assoc());
+
+                                        }
 
                                         $flowcontrol_lc = 1;       // controle de fluxo da lista_cores
                                         foreach($lista_cores as $key){
@@ -775,7 +780,7 @@
 <script type="text/javascript" src="assets/js/jquery-ui/jquery-ui.min.js "></script>
 <script type="text/javascript" src="assets/js/popper.js/popper.min.js"></script>
 <script type="text/javascript" src="assets/js/bootstrap/js/bootstrap.min.js "></script>
-<script src="../js/script.js"></script>
+<script src="assets/js/script_dashboard.js"></script>
 <script src="../js/jquery.mask.js"></script>
 <!-- waves js -->
 <script src="assets/pages/waves/js/waves.min.js"></script>

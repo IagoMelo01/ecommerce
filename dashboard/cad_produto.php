@@ -48,6 +48,8 @@
 
             $conn->query("INSERT INTO `produtos`( `titulo`, `capa`, `corPrincipal`, `descricao`, `categoria`, `subcategoria`, `vendidos`, `comprimento`, `peso`, `altura`, `largura` , `valor`, `pasta`, `referencia`) VALUES ( '$tituloUTF', '$capa', '$cPrincipal', '$descricao', '$categoria', '$subcategoria', '0', '$comprimento', '$peso', '$altura', '$largura', '$valor', '$pasta', '$time_reference')");
             $ref = $conn->query("SELECT * FROM produtos WHERE `referencia` = '$time_reference' ORDER BY id DESC LIMIT 1");
+            print_r($ref);
+            echo "-- end ref --";
             $ref = $ref->fetch_array(MYSQLI_ASSOC);
             $idRef = $ref['id'];
             echo $idRef . '<br>';
@@ -147,7 +149,7 @@
                                 
                                 <div class="form-group form-primary">
                                     <h6>Foto de capa:</h6>
-                                    <input onchange="preview()" id="imgCapa" type="file" name="capa" accept=".jpg,.png,.jpeg" class="form-control arq">
+                                    <input onchange="preview()" id="imgCapa" type="file" name="capa" accept=".jpg,.png,.jpeg,.webp" class="form-control arq">
                                     <img id="imgPreview" style="height:100px;" src="#" alt="">
                                 </div>
                                 <div class="form-group form-primary">
@@ -335,7 +337,7 @@ function preview() {
 <script type="text/javascript" src="assets/js/jquery-ui/jquery-ui.min.js "></script>
 <script type="text/javascript" src="assets/js/popper.js/popper.min.js"></script>
 <script type="text/javascript" src="assets/js/bootstrap/js/bootstrap.min.js "></script>
-<script src="../js/script.js"></script>
+<script src="assets/js/script_dashboard.js"></script>
 <script src="../js/jquery.mask.js"></script>
 <!-- waves js -->
 <script src="assets/pages/waves/js/waves.min.js"></script>

@@ -45,14 +45,16 @@ while($lista_produtos[] = $consulta_produtos->fetch_assoc());
                             <div class="container-mostrar-produto">
                                 <ul>
                                     <?php 
-                                        foreach($lista_produtos as $key){ ?>
+                                        foreach($lista_produtos as $key){ 
+                                            if(!empty($key)) { ?>
+                                            
                                             <a href="mod_produto?p=2.2&pd=<?php echo $key['id']; ?>">
                                                 <li class="produto__item">
                                                         <img src="../<?php echo $key['capa'] ?>" alt="pd">
                                                         <div>&nbsp;<?php echo $key['titulo']; ?> </div>
                                                 </li>
                                             </a>
-                                        <?php } ?>
+                                        <?php } } ?>
                                         
                                 </ul>
                             </div>

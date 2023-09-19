@@ -36,36 +36,38 @@ if(isset($_POST) && $_POST['funcao'] === 'adicionar_cor_existente'){
 
     echo $pasta;
 
+    echo "<script> alert(" . $pasta . ") </script>";
+
         
-        $diretorio = $pasta . '/' . time();  // Irá criar o diretório da cor a ser salva, nomeada pelo timestamp
+    $diretorio = $pasta . '/' . time();  // Irá criar o diretório da cor a ser salva, nomeada pelo timestamp
 
-        $conn->query("INSERT INTO `cores`( `cor`, `referencia`, `fotos`) VALUES ( '$nova_cor', '$id_produto', '$diretorio')");     //query para cadastrar a cor no banco de dados
-        
+    $conn->query("INSERT INTO `cores`( `cor`, `referencia`, `fotos`) VALUES ( '$nova_cor', '$id_produto', '$diretorio')");     //query para cadastrar a cor no banco de dados
+    
 
-        mkdir($diretorio, 0700);         //cria uma pasta para as fotos da cor
-
-
-        $diretorio_fotos = $diretorio . '/';
-
-        $controle_upload = 0;
-
-        foreach( $_FILES['arquivos']['name'] as $key){        
-            /*
-                Faz o upload das imagens no diretório criado
-            */
+    mkdir($diretorio, 0700);         //cria uma pasta para as fotos da cor
 
 
-            print_r($key);
+    $diretorio_fotos = $diretorio . '/';
 
-            $uploadfile = $diretorio_fotos . $referencia . '_' . $controle_upload . '__' . basename($key);
+    $controle_upload = 0;
 
-            echo $uploadfile;
+    foreach( $_FILES['arquivos']['name'] as $key){        
+        /*
+            Faz o upload das imagens no diretório criado
+        */
 
-            move_uploaded_file($_FILES['arquivos']['tmp_name'][$controle_upload], $uploadfile);
 
-            $controle_upload++;
+        print_r($key);
 
-        }
+        $uploadfile = $diretorio_fotos . $referencia . '_' . $controle_upload . '__' . basename($key);
+
+        echo $uploadfile;
+
+        move_uploaded_file($_FILES['arquivos']['tmp_name'][$controle_upload], $uploadfile);
+
+        $controle_upload++;
+
+    }
 
         
     echo '<script> window.location.href="./mod_produto?p=2.2&pd=' . $id_produto . '" </script>';

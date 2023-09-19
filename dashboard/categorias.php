@@ -271,7 +271,7 @@ if(isset($_GET['exct'])){
     <script type="text/javascript" src="assets/js/jquery-ui/jquery-ui.min.js "></script>
     <script type="text/javascript" src="assets/js/popper.js/popper.min.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap/js/bootstrap.min.js "></script>
-    <script src="../js/script.js"></script>
+    <script src="assets/js/script_dashboard.js"></script>
     <!-- waves js -->
     <script src="assets/pages/waves/js/waves.min.js"></script>
     <!-- jquery slimscroll js -->

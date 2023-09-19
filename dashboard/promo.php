@@ -457,7 +457,7 @@
 <script src="assets/js/vertical/vertical-layout.min.js"></script>
 <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>
-<script src="../js/script.js"></script>
+<script src="assets/js/script_dashboard.js"></script>
 </body>
 
 </html>
