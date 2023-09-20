@@ -44,7 +44,7 @@ if(isset($_POST) && $_POST['funcao'] === 'adicionar_cor_existente'){
     $conn->query("INSERT INTO `cores`( `cor`, `referencia`, `fotos`) VALUES ( '$nova_cor', '$id_produto', '$diretorio')");     //query para cadastrar a cor no banco de dados
     
 
-    mkdir($diretorio, 0700);         //cria uma pasta para as fotos da cor
+    mkdir($diretorio, 0744);         //cria uma pasta para as fotos da cor
 
 
     $diretorio_fotos = $diretorio . '/';

@@ -62,19 +62,19 @@ if (isset($_POST['login'])) {
 <head>
     <meta charset="utf8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/style1.css" media="screen and (min-width: 480px) and (max-width: 768px)">
-    <link rel="stylesheet" type="text/css" href="css/style1.css" media="screen and (max-width: 480px)">
-    <link rel="stylesheet" href="css/style.css" media="screen and (min-width: 769px)">
+    <link rel="stylesheet" type="text/css" href="assets/css/style1.css" media="screen and (min-width: 480px) and (max-width: 768px)">
+    <link rel="stylesheet" type="text/css" href="assets/css/style1.css" media="screen and (max-width: 480px)">
+    <link rel="stylesheet" href="assets/css/style.css" media="screen and (min-width: 769px)">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Imbue:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="./js/jquery-3.6.0.min.js"></script>
+    <script src="assets/libs/jQuery/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <script src="./js/script.js"></script>
-    <script src="./js/jquery.mask.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/libs/jQuery/jquery.mask.js"></script>
+    <script src="assets/libs/bootstrap/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
-    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script type="text/javascript" src="slick/slick.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/libs/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/libs/slick/slick-theme.css"/>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="assets/libs/slick/slick.min.js"></script>

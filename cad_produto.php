@@ -52,10 +52,10 @@ if(isset($_POST['nom'])){
     <link href="https://fonts.googleapis.com/css2?family=Imbue:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <script src="./js/jquery-3.6.0.min.js"></script>
-    <script src="./js/script.js"></script>
-    <script src="./js/jquery.mask.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
+    <script src="assets/libs/jQuery/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/libs/jQuery/jquery.mask.js"></script>
+    <script src="assets/libs/bootstrap/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">

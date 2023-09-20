@@ -781,7 +781,7 @@
 <script type="text/javascript" src="assets/js/popper.js/popper.min.js"></script>
 <script type="text/javascript" src="assets/js/bootstrap/js/bootstrap.min.js "></script>
 <script src="assets/js/script_dashboard.js"></script>
-<script src="../js/jquery.mask.js"></script>
+<script src="../assets/libs/jQuery/jquery.mask.js"></script>
 <!-- waves js -->
 <script src="assets/pages/waves/js/waves.min.js"></script>
 <!-- jquery slimscroll js -->

@@ -9,8 +9,8 @@
         </div>
         <div class="footer_item inline">
             <h5>FORMAS DE ENVIO</h5>
-            <img class="footer_img" src="./assets/pac.png" alt="pac">
-            <img class="footer_img" src="./assets/sedex.png" alt="sedex">
+            <img class="footer_img" src="assets/img/pac.png" alt="pac">
+            <img class="footer_img" src="assets/img/sedex.png" alt="sedex">
         </div>
         <div class="footer_item">
             <h5>CONTATO</h5>
@@ -20,19 +20,19 @@
         </div>
         <div class="footer_item inline">
             <h5>FORMAS DE PAGAMENTO</h5>
-            <img src="./assets/boleto.png" alt="boleto" class="footer_img">
-            <img src="./assets/visa.png" alt="visa" class="footer_img">
-            <img src="./assets/mastercard.png" alt="mastercard" class="footer_img">
-            <img src="./assets/amex.png" alt="amex" class="footer_img">
-            <img src="./assets/elo.png" alt="elo" class="footer_img">
-            <img src="./assets/hipercard.png" alt="hipercard" class="footer_img">
-            <img src="./assets/mp.png" alt="mercado pago" class="footer_img">
+            <img src="assets/img/boleto.png" alt="boleto" class="footer_img">
+            <img src="assets/img/visa.png" alt="visa" class="footer_img">
+            <img src="assets/img/mastercard.png" alt="mastercard" class="footer_img">
+            <img src="assets/img/amex.png" alt="amex" class="footer_img">
+            <img src="assets/img/elo.png" alt="elo" class="footer_img">
+            <img src="assets/img/hipercard.png" alt="hipercard" class="footer_img">
+            <img src="assets/img/mp.png" alt="mercado pago" class="footer_img">
         </div>
     </div>
     
-    <script src="./js/jquery-3.6.0.min.js"></script>
-    <script src="./js/script.js"></script>
-	<script src="./js/jquery.mask.js"></script>
+    <script src="assets/libs/jQuery/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/script.js"></script>
+	<script src="assets/libs/jQuery/jquery.mask.js"></script>
 
 </body>
 </html>
