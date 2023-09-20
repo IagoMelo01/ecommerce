@@ -7,5 +7,4 @@ define('DB_NAME', 'store'); // Nome do banco de dados nome recomendado = 'store'
 
 // Outras configurações
 define('DB_CHARSET', 'utf8'); // Conjunto de caracteres (RECOMENDADO utf8)
-
 ?>
