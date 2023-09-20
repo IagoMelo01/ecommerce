@@ -1,9 +1,9 @@
 <?php
 
-require_once "setup/db_config.php";
+include_once "setup/db_config.php";
 
-$conn = new mysqli("DB_HOST", "DB_USER", "DB_PASS", "DB_NAME");
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-mysqli_set_charset($conn, 'DB_CHARSET');
+mysqli_set_charset($conn, DB_CHARSET);
 
 ?>

@@ -13,7 +13,7 @@
         <header class="header pc backcolor0">
             <div class="headerContainer pc">
                 <a style="text-decoration: none;" href="./">
-                    <img class="title" src="./assets/logo_divas1300.png" alt="logo">
+                    <img class="title" src="./assets/img/logo_divas1300.png" alt="logo">
                 </a>
 
                 <form class="searchForm" action="search.php" method="GET">

@@ -1,10 +1,20 @@
-<?php include 'header.php'; 
+<?php 
 
+include 'header.php'; 
 include "../conn.php";
 
 $consulta_produtos  = $conn->query("SELECT * FROM produtos");
 $lista_produtos = [];
-while($lista_produtos[] = $consulta_produtos->fetch_assoc());
+if ($consulta_produtos) {
+    // A consulta foi bem-sucedida e não está vazia
+    while ($row = $consulta_produtos->fetch_assoc()) {
+        $lista_produtos[] = $row; // Adiciona cada linha ao array
+    }
+} else {
+    // A consulta está vazia ou retornou erro
+    echo "<pre>A consulta está vazia ou retornou erro</pre>";
+}
+
 
 ?>
 <div class="pcoded-content">
@@ -13,7 +23,7 @@ while($lista_produtos[] = $consulta_produtos->fetch_assoc());
         <div class="page-block">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                        <?php include 'searchBar.php';?>
+                    <?php include 'searchBar.php';?>
                 </div>
             </div>
         </div>
@@ -22,7 +32,7 @@ while($lista_produtos[] = $consulta_produtos->fetch_assoc());
     <div class="pcoded-inner-content">
         <div class="main-body">
             <div class="page-wrapper">
-
+                
                 <!-- Page-body start -->
                 <div class="page-body">
                     <!-- Row start -->

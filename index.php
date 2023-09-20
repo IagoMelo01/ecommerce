@@ -26,13 +26,13 @@ include './header.php';
     
 
     <div class="carousel">
-        <div><img class="bannerImg" src="./assets/Home1.jpeg" alt="" /></div>
-        <div><img class="bannerImg" src="./assets/Home2.jpeg" alt="" /></div>
-        <div><img class="bannerImg" src="./assets/Home3.jpeg" alt=""/></div>
-    </div>
+        <div><img class="bannerImg" src="./assets/img/Home1.jpeg" alt="" /></div>
+        <div><img class="bannerImg" src="./assets/img/Home2.jpeg" alt="" /></div>
+        <div><img class="bannerImg" src="./assets/img/Home3.jpeg" alt=""/></div>
+    </div>img/
 
     
-    <script src="./js/carousel.js"></script>
+    <script src="assets/js/carousel.js"></script>
         
 
     
