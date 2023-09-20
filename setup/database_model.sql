@@ -33,16 +33,21 @@ CREATE TABLE `categorias` (
   `categoria` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+
 --
--- Extraindo dados da tabela `categorias`
+-- Estrutura da tabela `subcategorias`
 --
 
-INSERT INTO `categorias` (`id`, `categoria`) VALUES
-(74, 'Blusas'),
-(75, 'Calças'),
-(76, 'Sapatos');
+CREATE TABLE `subcategorias` (
+  `id` bigint(20) NOT NULL,
+  `subcategoria` tinytext NOT NULL,
+  `referencia` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
 
 --
 -- Estrutura da tabela `cores`
@@ -55,13 +60,6 @@ CREATE TABLE `cores` (
   `fotos` tinytext NOT NULL,
   `situacao` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `cores`
---
-
-INSERT INTO `cores` (`id`, `cor`, `referencia`, `fotos`, `situacao`) VALUES
-(224, 'Preto', 22, '../www/produtos/Tenis_Nike__245935-1683654661/1683656030', 0);
 
 -- --------------------------------------------------------
 
@@ -82,13 +80,6 @@ CREATE TABLE `enderecos` (
   `destinatario` tinytext NOT NULL,
   `ponto_referencia` tinytext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `enderecos`
---
-
-INSERT INTO `enderecos` (`id`, `rua`, `cep`, `numero`, `bairro`, `complemento`, `estado`, `cidade`, `usuario`, `destinatario`, `ponto_referencia`) VALUES
-(1, 'Rua sara costa roz', '38600-001', '222', 'paracatuzinho', 'comercio', 'Minas Gerais', 'paracatu', 1, 'Iago Melo', 'padaria');
 
 -- --------------------------------------------------------
 
@@ -148,40 +139,6 @@ CREATE TABLE `produtos` (
   `situacao` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Extraindo dados da tabela `produtos`
---
-
-INSERT INTO `produtos` (`id`, `titulo`, `capa`, `corPrincipal`, `descricao`, `categoria`, `subcategoria`, `vendidos`, `comprimento`, `peso`, `altura`, `largura`, `valor`, `pasta`, `referencia`, `situacao`) VALUES
-(21, 'Tênis Nike', 'www/capas/69328654040046_005_1-TENIS-FEM-RUN-REVOLUTION-6-DC3729-NIKE.png', '', 'O Nike Revolution possui cabedal leve em mesh, interior acolchoado e entressola em EVA que auxilia na absorção de impactos. O solado emborrachado e antiderrapante conta com ranhuras que transmite maior segurança e estabilidade ao caminhar. Fechamento em cadarço. Modelo ideal para quem quer liberdade, leveza e conforto no dia a dia.', 76, 127, '0', 20, 1000, 20, 20, '389,90', '../www/produtos/Tenis_Nike__693286-1683654259', 1683654259, 0),
-(22, 'Tênis Nike', 'www/capas/24593554040046_005_1-TENIS-FEM-RUN-REVOLUTION-6-DC3729-NIKE.png', '', 'O Nike Revolution possui cabedal leve em mesh, interior acolchoado e entressola em EVA que auxilia na absorção de impactos. O solado emborrachado e antiderrapante conta com ranhuras que transmite maior segurança e estabilidade ao caminhar. Fechamento em cadarço. Modelo ideal para quem quer liberdade, leveza e conforto no dia a dia.', 76, 127, '0', 20, 1000, 20, 20, '389,90', '../www/produtos/Tenis_Nike__245935-1683654661', 1683654661, 0);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `subcategorias`
---
-
-CREATE TABLE `subcategorias` (
-  `id` bigint(20) NOT NULL,
-  `subcategoria` tinytext NOT NULL,
-  `referencia` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `subcategorias`
---
-
-INSERT INTO `subcategorias` (`id`, `subcategoria`, `referencia`) VALUES
-(135, 'Regata', 74),
-(136, 'Social', 74),
-(137, 'Feminino', 74),
-(138, 'Masculino', 74),
-(139, 'Legging', 75),
-(140, 'Jeans', 75),
-(141, 'Esportiva', 75),
-(142, 'Tênis de Caminhada', 76);
-
 -- --------------------------------------------------------
 
 --
@@ -195,29 +152,6 @@ CREATE TABLE `tamanhos` (
   `quantidade` int(11) NOT NULL,
   `situacao` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `tamanhos`
---
-
-INSERT INTO `tamanhos` (`id`, `tamanho`, `referencia`, `quantidade`, `situacao`) VALUES
-(6, '888', 14, 1000, 0),
-(7, 'm', 14, 33333, 0),
-(8, 'gg', 14, 896, 0),
-(9, 'g', 14, 742, 0),
-(10, 'pp', 14, 1000, 0),
-(11, '888', 215, 1000, 0),
-(12, 'm', 215, 33333, 0),
-(13, 'gg', 215, 896, 0),
-(14, 'g', 216, 742, 0),
-(15, 'pp', 216, 1000, 0),
-(16, 'g', 217, 1000, 0),
-(17, 'm', 218, 33333, 0),
-(18, 'g', 219, 1000, 0),
-(19, 'm', 220, 33333, 0),
-(20, 'g', 221, 1000, 0),
-(21, 'm', 222, 33333, 0),
-(22, '', 223, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -234,16 +168,6 @@ CREATE TABLE `usuarios` (
   `cpf` varchar(14) NOT NULL,
   `nascimento` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `usuarios`
---
-
-INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `telefone`, `cpf`, `nascimento`) VALUES
-(1, 'Iago Oliveira Melo', 'iagomello160@gmail.com', '12345678', '(38) 98403-7787', '023.653.616-77', '2003-01-24'),
-(2, 'Iago Oliveira Melo', 'iagomello160@gmail.com', '123456789', '(38) 98403-', '023.653.616', '2003-01-24'),
-(3, 'Iago Oliveira Melo', 'iagomello160@gmail.com', '123456781', '(38) 98403-', '023.653.616', '2003-01-24'),
-(4, 'Iago Oliveira Melo', 'iagomello160@gmail.com', '123456788', '(38) 98403-', '023.653.616', '2003-01-24');
 
 -- --------------------------------------------------------
 
@@ -266,16 +190,7 @@ CREATE TABLE `vendas` (
   `foto` tinytext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Extraindo dados da tabela `vendas`
---
-
-INSERT INTO `vendas` (`id`, `usuario`, `cep`, `endereco`, `quantidade`, `frete`, `valor`, `data`, `situacao`, `pagamento`, `codigo_envio`, `foto`) VALUES
-(1, '2', '38603300', 'rua sara costa roriz, 298, paracatuzinho, Paracatu-MG', 10, 'PAC - R$36,00', '200,00', '1620849892', 0, 'Cartão de crédito - 1 parcela', '', '');
-
---
--- Índices para tabelas despejadas
---
+-- --------------------------------------------------------
 
 --
 -- Índices para tabela `categorias`
@@ -389,6 +304,13 @@ ALTER TABLE `usuarios`
 ALTER TABLE `vendas`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
+
+--
+-- criando referência de chave estrangeira
+--
+ALTER TABLE subcategorias
+ADD CONSTRAINT fk_subcategorias_referencia
+FOREIGN KEY (referencia) REFERENCES categorias(id) ON DELETE SET NULL;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

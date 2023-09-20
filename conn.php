@@ -1,11 +1,9 @@
 <?php
 
+require_once "setup/db_config.php";
 
+$conn = new mysqli("DB_HOST", "DB_USER", "DB_PASS", "DB_NAME");
 
-$conn = new mysqli("localhost", "root", "", "store");
-
-
-
-mysqli_set_charset($conn, 'utf8mb4');
+mysqli_set_charset($conn, 'DB_CHARSET');
 
 ?>
