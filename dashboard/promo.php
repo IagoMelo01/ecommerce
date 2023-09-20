@@ -1,7 +1,8 @@
-<?php include 'header.php'; include '../conn.php'; ?>
+<?php 
 
+include '../conn.php'; 
 
-<?php  //cadastra o cupomo
+//cadastra o cupom
 
     if(isset($_POST['codigo'])){
         $cupom_codigo = $_POST['codigo'];
@@ -20,12 +21,13 @@
             }
         }
         echo $cupom_categorias;
-
-
+        
+        
         //executa a query
         $conn->query("INSERT INTO `cupons`( `codigo`, `valor_minimo`, `desconto`, `categorias`, `validade`) VALUES ( '$cupom_codigo', '$cupom_v_minimo', '$cupom_porcentagem', '$cupom_categorias', '$cupom_validade' )");
     }
-
+    include 'header.php'; 
+    
 ?>
 
 
@@ -41,106 +43,13 @@
                         <p class="m-b-0">&nbsp;</p>
                     </div>
                 </div>
-                <!--<div class="col-md-4">
-                                        <ul class="breadcrumb">
-                                            <li class="breadcrumb-item">
-                                                <a href="index.html"> <i class="fa fa-home"></i> </a>
-                                            </li>
-                                            <li class="breadcrumb-item"><a href="#!">Basic Components</a>
-                                            </li>
-                                            <li class="breadcrumb-item"><a href="#!">Accordion</a>
-                                            </li>
-                                        </ul>
-                                    </div>-->
+                
             </div>
         </div>
     </div>
     <!-- Page-header end -->
     <div class="pcoded-inner-content">
         <div class="main-body">
-            <div class="page-wrapper">
-
-                <!-- Page-body start -->
-                <div class="page-body">
-                    <!-- Row start -->
-                    <div class="row">
-                        <!-- Multiple Open Accordion start -->
-                        <!--<div class="col-lg-6">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5 class="card-header-text">All Close Accordion</h5>
-                                                    </div>
-                                                    <div class="card-block accordion-block">
-                                                        <div id="accordion" role="tablist" aria-multiselectable="true">
-                                                            <div class="accordion-panel">
-                                                                <div class="accordion-heading" role="tab" id="headingOne">
-                                                                    <h3 class="card-title accordion-title">
-                                                                        <a class="accordion-msg waves-effect waves-dark" data-toggle="collapse"
-                                                                        data-parent="#accordion" href="#collapseOne"
-                                                                        aria-expanded="true" aria-controls="collapseOne">
-                                                                        Lorem Message 1
-                                                                    </a>
-                                                                </h3>
-                                                            </div>
-                                                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                                                <div class="accordion-content accordion-desc">
-                                                                    <p>
-                                                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
-                                                                        survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                                                                        sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="accordion-panel">
-                                                            <div class="accordion-heading" role="tab" id="headingTwo">
-                                                                <h3 class="card-title accordion-title">
-                                                                    <a class="accordion-msg waves-effect waves-dark" data-toggle="collapse"
-                                                                    data-parent="#accordion" href="#collapseTwo"
-                                                                    aria-expanded="false"
-                                                                    aria-controls="collapseTwo">
-                                                                    Lorem Message 2
-                                                                </a>
-                                                            </h3>
-                                                        </div>
-                                                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                            <div class="accordion-content accordion-desc">
-                                                                <p>
-                                                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
-                                                                    survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                                                                    sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="accordion-panel">
-                                                        <div class=" accordion-heading" role="tab" id="headingThree">
-                                                            <h3 class="card-title accordion-title">
-                                                                <a class="accordion-msg waves-effect waves-dark" data-toggle="collapse"
-                                                                data-parent="#accordion" href="#collapseThree"
-                                                                aria-expanded="false"
-                                                                aria-controls="collapseThree">
-                                                                Lorem Message 3
-                                                            </a>
-                                                        </h3>
-                                                    </div>
-                                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                        <div class="accordion-content accordion-desc">
-                                                            <p>
-                                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
-                                                                survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                                                                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>-->
-                    </div>
-                </div>
-            </div>
-            <!-- Multiple Open Accordion ends -->
-            <!-- Single Open Accordion start -->
-            <!-- Single Open Accordion ends -->
         </div>
         <!-- Row end -->
         <!-- Row start -->
@@ -188,7 +97,10 @@
                                 
                                     $listar_categorias = $conn->query("SELECT * FROM categorias WHERE 1");
                                     $categorias_lista = [];
-                                    while($categorias_lista[] = $listar_categorias->fetch_assoc())
+                                    if($listar_categorias){
+                                        while($categorias_lista[] = $listar_categorias->fetch_assoc());
+
+                                    }
                                     $flow_control_promo1 = 0;
                                     foreach($categorias_lista as $key){
                                         if(!empty($key)){
@@ -270,7 +182,11 @@
                                 $listar_cupons = $conn->query("SELECT * FROM cupons WHERE 1");
                                 $cupons_lista = [];
 
-                                while($cupons_lista[] = $listar_cupons->fetch_assoc())
+                                if($listar_cupons){
+                                    while($cupons_lista[] = $listar_cupons->fetch_assoc());
+
+                                }
+
                                 $flow_control_promo2 = 0;
                                 foreach($cupons_lista as $key){
                                     if(!empty($key)){
