@@ -3,7 +3,8 @@ include "../conn.php";
 
 $consulta_pedidos = $conn->query("SELECT * FROM vendas");
 $lista_pedidos = [];
-while($lista_pedidos[] = $consulta_pedidos->fetch_assoc());
+if($consulta_pedidos)
+    while($lista_pedidos[] = $consulta_pedidos->fetch_assoc());
 
 
 ?>
@@ -61,7 +62,8 @@ while($lista_pedidos[] = $consulta_pedidos->fetch_assoc());
                                                             <?php $lista_ref = 1; foreach($lista_pedidos as $key){if(!empty($key)){ 
                                                                 $id_usuario = $key['usuario'];
                                                                 $usuario = $conn->query("SELECT * FROM usuarios WHERE id = '$id_usuario'");
-                                                                $usuario = $usuario->fetch_assoc();
+                                                                if($usuario)
+                                                                    $usuario = $usuario->fetch_assoc();
                                                                 
                                                             ?>
                                                                 
