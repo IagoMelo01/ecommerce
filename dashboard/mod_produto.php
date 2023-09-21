@@ -577,7 +577,7 @@
                                         $listar_cores_query = $conn->query("SELECT * FROM `cores` WHERE `referencia` = '$id_modificar' AND `situacao` = '0' ");
                                         $lista_cores = [];
                                         // echo "<script> console.log(" . print_r($listar_cores_query, True) . ") </script>";
-                                        print_r($listar_cores_query);
+                                        // print_r($listar_cores_query);
                                         if(!empty($listar_cores_query)){
                                           while($lista_cores[] = $listar_cores_query->fetch_assoc());
 

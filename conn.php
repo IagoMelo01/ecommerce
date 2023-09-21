@@ -1,6 +1,6 @@
 <?php
 
-include_once "setup/db_config.php";
+include_once "setup/db_config_example.php";
 
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 

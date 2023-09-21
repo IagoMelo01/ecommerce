@@ -288,7 +288,7 @@ function editarTamanho(id){
 } 
 
 function adcTamanhoExistente(id){
-  alert(id + '  ok')
+  // alert(id + '  ok')
   $("#idCorAlvo").val(id)
   $("#tamanho_novo").val(" ");
   $("#quantidade_nova").val(" ");
