@@ -1,6 +1,6 @@
 <?php
 
-include 'conn.php';
+include_once './setup/conn.php';
 
 $row = $conn->query("SELECT * FROM `produtos` WHERE 1");
 $result = [];

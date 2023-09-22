@@ -10,7 +10,7 @@ echo "Lista de Arquivos do diretório '<strong>".$path."</strong>':<br />";
     }
 $diretorio -> close();
 
-include 'conn.php';
+include_once '../setup/conn.php';
 
 if(isset($_POST['nom'])){
     $produto = $_POST['produto'];

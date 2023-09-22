@@ -1,6 +1,6 @@
 <!-- <div><pre>
 <?php 
-        include '../conn.php';
+        include_once '../setup/conn.php';
 
         $id_modificar = $_GET['pd'];    //extrai o id do produto a ser modificado por GET
 

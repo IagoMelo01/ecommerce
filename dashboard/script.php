@@ -2,7 +2,7 @@
 
 
 
-include '../conn.php';
+include_once '../setup/conn.php';
 
 
 if(isset($_POST) && $_POST['funcao'] == 'excluir_tamanho'){

@@ -1,5 +1,5 @@
 <?php
-include_once './conn.php';
+include_once './setup/conn.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

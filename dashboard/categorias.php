@@ -4,7 +4,7 @@
 
 <?php 
 
-include '../conn.php';
+include_once '../setup/conn.php';
 
 if(isset($_POST['ctrl'])){
     $ctref = 1;

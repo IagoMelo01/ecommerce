@@ -75,7 +75,7 @@
         <button class="searchBtn" type="submit"><i class="fa fa-search"></i></button>
     </form>
 
-    <?php include 'conn.php';
+    <?php include_once './setup/conn.php';
         $hconsulta_categorias = $conn->query("SELECT * FROM categorias");
         $hlista_categorias = [];
         while($hlista_categorias[] = $hconsulta_categorias->fetch_assoc());

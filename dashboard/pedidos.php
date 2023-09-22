@@ -1,5 +1,5 @@
 <?php include 'header.php';
-include "../conn.php";
+include_once "../setup/conn.php";
 
 $consulta_pedidos = $conn->query("SELECT * FROM vendas");
 $lista_pedidos = [];

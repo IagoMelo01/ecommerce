@@ -1,7 +1,7 @@
 <?php 
 
 include 'header.php'; 
-include "../conn.php";
+include_once "../setup/conn.php";
 
 $consulta_produtos  = $conn->query("SELECT * FROM produtos");
 $lista_produtos = [];

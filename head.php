@@ -7,7 +7,7 @@
     $_SESSION['token'] = substr(str_shuffle($Strings), $a, $b);
 }
 
-include 'conn.php';
+include_once './setup/conn.php';
 
 
 

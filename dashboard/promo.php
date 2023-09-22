@@ -1,6 +1,6 @@
 <?php 
 
-include '../conn.php'; 
+include_once '../setup/conn.php'; 
 
 //cadastra o cupom
 

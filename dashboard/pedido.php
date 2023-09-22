@@ -1,5 +1,5 @@
 <?php include 'header.php'; 
-    include '../conn.php';
+    include_once '../setup/conn.php';
 
     $id_pedido = $_GET['pedido'];
 

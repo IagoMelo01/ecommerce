@@ -2,7 +2,7 @@
 
 $id = $_GET['id'];
 
-include "../conn.php";
+include_once "../setup/conn.php";
 
 $conn->query("UPDATE `cupons` SET validade = '1969-1-1' WHERE id ='$id'");
 

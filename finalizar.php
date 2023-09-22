@@ -1,5 +1,5 @@
 <?php 
-include 'conn.php';
+include_once './setup/conn.php';
 session_start();
 
 if($_SESSION['token'] != $_GET['token'] || empty($_GET['token'])){
