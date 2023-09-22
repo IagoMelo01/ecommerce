@@ -4,10 +4,7 @@ include 'conn.php';
 
 $row = $conn->query("SELECT * FROM `produtos` WHERE 1");
 $result = [];
-//print_r( $row->fetch_array(MYSQLI_ASSOC));
-// while( $row->fetch_array(MYSQLI_ASSOC)){
-//array_push($result, $row->fetch_array(MYSQLI_ASSOC));
-// }
+
 ?>
 
 
@@ -52,14 +49,6 @@ include './header.php';
                 ?>
                     <li class="catMenuItem">
                         <a class="catMenuCategory" href="subcategorias?subc=<?php echo $skey['id']; ?>"><?php echo $skey['subcategoria']; ?></a>
-                        <!-- <ul class="subMenu">
-                            <li><a class="subMenuItem" href="#">relógios</a></li>
-                            <li><a class="subMenuItem" href="#">pulseiras</a></li>
-                            <li><a class="subMenuItem" href="#">colares</a></li>
-                            <li><a class="subMenuItem" href="#">brincos</a></li>
-                            <li><a class="subMenuItem" href="#">anéis</a></li>
-                            <li><a class="subMenuItem" href="#">braceletes</a></li>
-                        </ul> -->
                     </li>
                 <?php }} ?>
                 
