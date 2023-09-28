@@ -305,12 +305,6 @@ ALTER TABLE `vendas`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
---
--- criando referência de chave estrangeira
---
-ALTER TABLE subcategorias
-ADD CONSTRAINT fk_subcategorias_referencia
-FOREIGN KEY (referencia) REFERENCES categorias(id) ON DELETE SET NULL;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
