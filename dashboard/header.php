@@ -249,14 +249,14 @@ if(!isset($_SESSION['logged_adm']) && $_SESSION['logged_adm'] != 'ok'){
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class="<?php if($pag == 2.1){ echo 'active';} ?>">
-                                            <a href="cad_produto?p=2.1" class="waves-effect waves-dark">
+                                            <a href="cad_produto.php?p=2.1" class="waves-effect waves-dark">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext">Adicionar produto</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
                                         <li class=" <?php if($pag == 2.2){ echo 'active';} ?>">
-                                            <a href="mos_produtos?p=2.2" class="waves-effect waves-dark">
+                                            <a href="mos_produtos.php?p=2.2" class="waves-effect waves-dark">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext">Modificar Produtos</span>
                                                 <span class="pcoded-mcaret"></span>
@@ -268,7 +268,7 @@ if(!isset($_SESSION['logged_adm']) && $_SESSION['logged_adm'] != 'ok'){
                             <div class="pcoded-navigation-label">Gerenciamento de categorias</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="<?php if($pag == 3){ echo 'active';} ?>">
-                                    <a href="categorias?p=3" class="waves-effect waves-dark">
+                                    <a href="categorias.php?p=3" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="bi-bookshelf"></i><b>FC</b></span>
                                         <span class="pcoded-mtext">Categorias</span>
                                         <span class="pcoded-mcaret"></span>
@@ -277,7 +277,7 @@ if(!isset($_SESSION['logged_adm']) && $_SESSION['logged_adm'] != 'ok'){
                             </ul>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="<?php if($pag == 3.1){ echo 'active';} ?>">
-                                    <a href="promo?p=3.1" class="waves-effect waves-dark">
+                                    <a href="promo.php?p=3.1" class="waves-effect waves-dark">
                                     <span class="pcoded-micon"><i class="bi bi-bookmark-star"></i></i><b>FC</b></span>
                                         <span class="pcoded-mtext">Cupons e promoções</span>
                                         <span class="pcoded-mcaret"></span>
@@ -287,7 +287,7 @@ if(!isset($_SESSION['logged_adm']) && $_SESSION['logged_adm'] != 'ok'){
                             <div class="pcoded-navigation-label">Gerenciamento de pedidos</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="<?php if($pag == 4){ echo 'active';} ?>">
-                                    <a href="pedidos?p=4" class="waves-effect waves-dark">
+                                    <a href="pedidos.php?p=4" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="bi-receipt"></i><b>B</b></span>
                                         <span class="pcoded-mtext">Pedidos</span>
                                         <span class="pcoded-mcaret"></span>
@@ -297,7 +297,7 @@ if(!isset($_SESSION['logged_adm']) && $_SESSION['logged_adm'] != 'ok'){
                             <div class="pcoded-navigation-label">Financeiro</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="<?php if($pag == 5){ echo 'active';} ?>">
-                                    <a href="financeiro?p=5" class="waves-effect waves-dark">
+                                    <a href="financeiro.php?p=5" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="bi-graph-up"></i><b>C</b></span>
                                         <span class="pcoded-mtext">Financeiro</span>
                                         <span class="pcoded-mcaret"></span>
