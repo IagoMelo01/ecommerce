@@ -59,7 +59,7 @@
             $controleCor = 1;
             $cor = 'cor' . $controleCor;
 
-            echo '<script> window.location.href="./mod_produto?p=2.2&pd=' . $idRef . '" </script>';
+            echo '<script> window.location.href="./mod_produto.php?p=2.2&pd=' . $idRef . '" </script>';
 
         }
     ?>
